@@ -12,8 +12,6 @@ namespace BlogWork.WebForms
     public partial class Registration : System.Web.UI.Page
     {
         DatabaseModel database;
-        SqlConnection con;
-        SqlCommand cmd;
         protected void Page_Load(object sender, EventArgs e)
         {
             database = new DatabaseModel("Data Source=.\\SQLEXPRESS01;Initial Catalog=BlogDatabase;Integrated Security=True;Pooling=False");

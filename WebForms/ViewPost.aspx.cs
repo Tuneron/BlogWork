@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BlogWork.Models;
 using System.Web.UI.HtmlControls;
+using System.Web.Security;
 
 namespace BlogWork.WebForms
 {
@@ -34,17 +35,17 @@ namespace BlogWork.WebForms
 
                     database.LoadComments();
 
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < database.GetCommentsCount(); i++)
                     {
-                        if (database.GetComment(i).PostId == currentPost)
+                        if (database.GetComment(i).PostId == database.GetPost(currentPost).PostId)
                         {
                             HtmlGenericControl div = new HtmlGenericControl("div");
-                            div.Controls.Add(new Label() { Text = database.GetComment(i).BlogUserId + "  say: " + "\r\n" });
-                            div.Controls.Add(new Label() { Text = database.GetComment(i).Body + "\r\n" });
+                            div.Controls.Add(new Image() { ImageUrl= "~/Resources/UnknownUserAvatar.jpg", CssClass="commentAvatar"});
+                            div.Controls.Add(new Label() { Text = (database.GetComment(i).BlogUserId + ": \r\n"), CssClass="commentName"});
+                            div.Controls.Add(new Label() { Text = database.GetComment(i).Body + "\r\n"});
                             div1.Controls.Add(div);
                         }
                     }
-
                     database.CloseConnection();
                 }
                 else
@@ -55,6 +56,20 @@ namespace BlogWork.WebForms
                 LabelState.Text = "Connection Error";
                 LabelState.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        protected void ButtonAddComment_Click(object sender, EventArgs e)
+        {
+            if (Request.Cookies["AuthCookie"] != null)
+            {
+                database.StartConnection();
+                string UserName = (FormsAuthentication.Decrypt(Request.Cookies["AuthCookie"].Value).Name);
+                database.AddComment(UserName, CommentTextArea.InnerText, database.GetPost(Int32.Parse(Request.QueryString["CurrentPost"])).PostId);
+                database.CloseConnection();
+                Response.Redirect("~/WebForms/ViewPost?CurrentPost=" + Int32.Parse(Request.QueryString["CurrentPost"]));
+            }
+            else
+                Response.Redirect("~/WebForms/LogIn.aspx");
         }
     }
 }

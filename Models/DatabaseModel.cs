@@ -149,5 +149,16 @@ namespace BlogWork.Models
             }
             return result.Remove(result.Length - 2, 1) + ");";
         }
+
+        public void AddComment(string userName, string commentBody, int postId)
+        {
+            int userId =Int32.Parse(ExecuteSelectCommand("SELECT BlogUserId FROM BlogUser WHERE Name = '" + userName + "';", "BlogUserId"));
+            ExecuteInsertCommand("INSERT INTO Comment(BlogUserId, PostId, Body)", userId.ToString(), postId.ToString(), commentBody);
+        }
+
+        public int GetCommentsCount()
+        {
+            return comments.Count;
+        }
     }
 }
