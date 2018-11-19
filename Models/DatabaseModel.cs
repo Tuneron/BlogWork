@@ -156,9 +156,20 @@ namespace BlogWork.Models
             ExecuteInsertCommand("INSERT INTO Comment(BlogUserId, PostId, Body)", userId.ToString(), postId.ToString(), commentBody);
         }
 
+        public void AddPost(string Theme, string Description, string Body, string Image, string userName)
+        {
+            ExecuteInsertCommand("INSERT INTO Post(Date, Theme, Description, Body, Image, AuthorId)", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                Theme, Description, Body, Image, ExecuteSelectCommand("SELECT BlogUserId FROM BlogUser WHERE Name = '" + userName + "';", "BlogUserId"));
+        }
+
         public int GetCommentsCount()
         {
             return comments.Count;
+        }
+
+        public string GetUserRank(string userName)
+        {
+            return ExecuteSelectCommand("SELECT Rank FROM BlogUser WHERE Name = '" + userName + "';","Rank");
         }
     }
 }

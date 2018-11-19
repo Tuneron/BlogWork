@@ -16,12 +16,13 @@ namespace BlogWork
         {
             if (database.CheckConnection())
             {
+                LabelState.Text = "Connection success";
+                LabelState.ForeColor = System.Drawing.Color.Green;
+
                 if (!string.IsNullOrEmpty(Request.QueryString["CurrentPost"]))
                 {
                     int currentPost = Int32.Parse(Request.QueryString["CurrentPost"]);
 
-                    LabelState.Text = "Connection success";
-                    LabelState.ForeColor = System.Drawing.Color.Green;
                     database.StartConnection();
                     database.LoadPosts();
                     ThemeOfPost.InnerText = database.GetPost(currentPost).Theme;
