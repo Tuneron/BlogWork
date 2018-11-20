@@ -32,6 +32,14 @@ namespace BlogWork.WebForms
                     PostBodyText.InnerText = database.GetPost(currentPost).Body;
                     LabelDateTime.InnerText = database.GetPost(currentPost).Date;
                     LabelAuthor.InnerText = database.GetPost(currentPost).AuthorId;
+                    if (database.GetPostImage(database.GetPost(currentPost).PostId) != "")
+                    {
+                        PostImage.Visible = true;
+                        PostImage.ImageUrl = database.GetPostImage(database.GetPost(currentPost).PostId);
+                    }
+                    else
+                        PostImage.Visible = false;
+
 
                     database.LoadComments();
 
@@ -40,7 +48,10 @@ namespace BlogWork.WebForms
                         if (database.GetComment(i).PostId == database.GetPost(currentPost).PostId)
                         {
                             HtmlGenericControl div = new HtmlGenericControl("div");
-                            div.Controls.Add(new Image() { ImageUrl= "~/Resources/UnknownUserAvatar.jpg", CssClass="commentAvatar"});
+                            if(database.GetUserAvatar(database.GetComment(i).BlogUserId) != "")
+                            div.Controls.Add(new Image() { ImageUrl= database.GetUserAvatar(database.GetComment(i).BlogUserId), CssClass="commentAvatar"});
+                            else
+                                div.Controls.Add(new Image() { ImageUrl = "~/Resources/UnknownUserAvatar.jpg", CssClass = "commentAvatar" });
                             div.Controls.Add(new Label() { Text = (database.GetComment(i).BlogUserId + ": \r\n"), CssClass="commentName"});
                             div.Controls.Add(new Label() { Text = database.GetComment(i).Body + "\r\n"});
                             div1.Controls.Add(div);

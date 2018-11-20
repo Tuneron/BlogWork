@@ -52,11 +52,23 @@
             padding-top:10px;
             padding-left:6px;
         }
+
+        .postImage{
+            border:solid;
+            border-width: 4px;
+            border-color:dimgrey;
+            max-height:600px;
+            max-width:900px;
+        }
     </style>
+
 
     <div id="postConteiner" class="jumbotron">
         <h1 id="ThemeOfPost" runat="server">Empty Theme</h1>
         <p runat="server" id="DescriptionOfPost" class="lead">Empty desctiption</p>
+        <asp:Image id="PostImage" runat="server" CssClass="postImage"/>
+        <br />
+        <br />
         <textarea runat="server" id="PostBodyText" class="Posttextarea">Empty body</textarea>
         <div style="text-align: right; font-size: small">
             <p id="LabelAuthor" runat="server" class="AuthorLabel">Unknown Author</p>

@@ -13,6 +13,33 @@ namespace BlogWork.Secure {
     public partial class NewPost {
         
         /// <summary>
+        /// RequiredFieldValidatorTheme элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorTheme;
+        
+        /// <summary>
+        /// RequiredFieldValidatorDescription элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorDescription;
+        
+        /// <summary>
+        /// RequiredFieldValidatorBody элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorBody;
+        
+        /// <summary>
         /// LabelState элемент управления.
         /// </summary>
         /// <remarks>
@@ -65,5 +92,14 @@ namespace BlogWork.Secure {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonAddPost;
+        
+        /// <summary>
+        /// valsumNewPost элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary valsumNewPost;
     }
 }

@@ -135,8 +135,15 @@ namespace BlogWork.Models
 
         public void ExecuteInsertCommand(string commandString, params string[] values)
         {
-            string test = (ConcatenationValues(values));
             command.CommandText = commandString + ConcatenationValues(values);
+            command.ExecuteNonQuery();
+        }
+
+        public void UpdateAvatar(string value, string columnValue)
+        {
+            command.CommandText = "UPDATE BLogUser SET Avatar = @value WHERE Name = @columnValue;" ;
+            command.Parameters.AddWithValue("@columnValue", columnValue);
+            command.Parameters.AddWithValue("@value", value);
             command.ExecuteNonQuery();
         }
 
@@ -170,6 +177,16 @@ namespace BlogWork.Models
         public string GetUserRank(string userName)
         {
             return ExecuteSelectCommand("SELECT Rank FROM BlogUser WHERE Name = '" + userName + "';","Rank");
+        }
+
+        public string GetUserAvatar(string userLogin)
+        {
+            return ExecuteSelectCommand("SELECT Avatar FROM BlogUser WHERE Name = '" + userLogin + "';", "Avatar");
+        }
+
+        public string GetPostImage(int postId)
+        {
+            return ExecuteSelectCommand("SELECT Image FROM Post WHERE PostId = '" + postId + "';", "Image");
         }
     }
 }

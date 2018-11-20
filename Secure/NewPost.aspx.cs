@@ -44,16 +44,18 @@ namespace BlogWork.Secure
             database.StartConnection();
             if (FileUploadImage.HasFile)
             {
-                database.LoadPosts();
                 FileUploadImage.SaveAs("C:/Users/Alex/source/repos/BlogWork/BlogWork/Resources/" + FileUploadImage.FileName);
+                database.AddPost(TextBoxTheme.Text, TextBoxDescription.Text, PostBody.InnerText,
+                "~/Resources/" + FileUploadImage.FileName, FormsAuthentication.Decrypt(Request.Cookies["AuthCookie"].Value).Name);
+                database.LoadPosts();
                 Response.Redirect("~/WebForms/Default.aspx?CurrentPost=" + database.LastPostIndex());
                 database.CloseConnection();
             }
             else
             {
-                database.LoadPosts();
                 database.AddPost(TextBoxTheme.Text, TextBoxDescription.Text, PostBody.InnerText,
                 null, FormsAuthentication.Decrypt(Request.Cookies["AuthCookie"].Value).Name);
+                database.LoadPosts();
                 Response.Redirect("~/WebForms/Default.aspx?CurrentPost=" + database.LastPostIndex());
                 database.CloseConnection();
             }

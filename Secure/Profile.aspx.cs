@@ -23,9 +23,23 @@ namespace BlogWork.Secure
 
                 database = new DatabaseModel("Data Source =.\\SQLEXPRESS01; Initial Catalog = BlogDatabase; Integrated Security = True; Pooling = False");
                 database.StartConnection();
-                LabelName.Text = database.ExecuteSelectCommand("SELECT Name FROM Bloguser WHERE Name = '" + userLogin + "';", "Name");
-                LabelRank.Text = database.ExecuteSelectCommand("SELECT Rank FROM Bloguser WHERE Name = '" + userLogin + "';", "Rank");
+                LabelName.Text = database.ExecuteSelectCommand("SELECT Name FROM BlogUser WHERE Name = '" + userLogin + "';", "Name");
+                LabelRank.Text = database.ExecuteSelectCommand("SELECT Rank FROM BlogUser WHERE Name = '" + userLogin + "';", "Rank");
+                if (database.ExecuteSelectCommand("SELECT Avatar FROM BlogUser WHERE Name = '" + userLogin + "';", "Avatar") != "")
+                UserAvatar.ImageUrl = database.ExecuteSelectCommand("SELECT Avatar FROM BlogUser WHERE Name = '" + userLogin + "';", "Avatar");
                 database.CloseConnection();
+            }
+        }
+
+        protected void ButtonUploadAvatar_Click(object sender, EventArgs e)
+        {
+            if(UploadAvatar.HasFile)
+            {
+                database.StartConnection();
+                UploadAvatar.SaveAs("C:/Users/Alex/source/repos/BlogWork/BlogWork/Resources/" + UploadAvatar.FileName);
+                database.UpdateAvatar("~/Resources/" + UploadAvatar.FileName, FormsAuthentication.Decrypt(Request.Cookies["AuthCookie"].Value).Name);
+                database.CloseConnection();
+                Response.Redirect("~/Secure/Profile.aspx");
             }
         }
     }
